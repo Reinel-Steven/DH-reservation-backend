@@ -1,18 +1,17 @@
 package com.reist.reservation.entity;
 
-import com.reist.reservation.dto.ProductDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.reist.reservation.dto.VehicleDto;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Data
+@Table(name = "product")
 public class Product implements Serializable {
 
     @Serial
@@ -23,16 +22,23 @@ public class Product implements Serializable {
     private Long id;
 
     private String name;
-    private String image;
+    private List<String> image;
     private BigDecimal price;
     private String description;
+    private String category;
+    private String brand;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="product_id")
+    private List<Booking> bookings;
 
     public Product() { super(); }
 
-    public Product(ProductDto p) {
+    public Product(VehicleDto p) {
         this.name = p.getName();
         this.image = p.getImage();
         this.price = this.getPrice();
         this.description = getDescription();
+        this.category = p.getCategory();
+        this.brand = p.getBrand();
     }
 }

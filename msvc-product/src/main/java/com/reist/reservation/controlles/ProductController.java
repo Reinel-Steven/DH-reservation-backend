@@ -1,6 +1,7 @@
 package com.reist.reservation.controlles;
 
 import com.reist.reservation.dto.ProductDto;
+import com.reist.reservation.dto.VehicleDto;
 import com.reist.reservation.entity.Product;
 import com.reist.reservation.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ProductDto> productCreate(ProductDto productDto){
+    public ResponseEntity<ProductDto> productCreate(@RequestBody VehicleDto productDto){
         try {
             Product product = new Product(productDto);
             service.save(product);
@@ -63,7 +64,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ProductDto> productUpdate(@PathVariable Long id, @RequestBody ProductDto productDto){
+    public ResponseEntity<ProductDto> productUpdate(@PathVariable Long id, @RequestBody VehicleDto productDto){
         try {
             Optional<Product> productUpdate = service.findById(id);
             if(productUpdate.isPresent()){
@@ -72,6 +73,8 @@ public class ProductController {
                 product.setDescription(productDto.getDescription());
                 product.setPrice(productDto.getPrice());
                 product.setImage(productDto.getImage());
+                product.setCategory(productDto.getCategory());
+                product.setBrand(productDto.getBrand());
                 service.save(product);
                 return ResponseEntity.accepted().build();
             }

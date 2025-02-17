@@ -6,6 +6,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class ProductDto implements Serializable {
@@ -14,7 +15,7 @@ public class ProductDto implements Serializable {
     private static final long serialVersionUID = -3561990368845425106L;
 
     private String name;
-    private String image;
+    private List<String> image;
     private BigDecimal price;
     private String description;
 
