@@ -2,75 +2,53 @@ package com.reist.reservations.uploadfile.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Base64;
 
 @Service
 public class FileLocalImpl implements IFileLocalService{
 
     private static final Logger log = LoggerFactory.getLogger(FileLocalImpl.class);
-    private static final String UPLOADS_FOLDER = "D:\\test\\";
+
+    @Value("${config.storage-url}")
+    private static String urlStorage;
+    public static String getUrlStorage() {
+        return urlStorage;
+    }
+
+    private static final String UPLOADS_FOLDER = "D://DigitalHouse//ProyectoReservacion//FrontReact//reservation//images-vehicles//";
     private static final String FILE_SAVE = "Archivo Guardado en " + UPLOADS_FOLDER;
 
-    @Override
-    public void init(String uploadFolder) throws IOException {
-        Files.createDirectory(Paths.get(uploadFolder));
-    }
-    @Override
-    public Resource load(String filename) throws MalformedURLException {
-        Path pathFoto = getPath(filename);
-        log.info(FILE_SAVE);
+    public String saveFile(String base64File, String fileName) throws IOException {
+        byte[] decodedBytes = Base64.getDecoder().decode(base64File);
 
-        Resource recurso = new UrlResource(pathFoto.toUri());
-
-        if (!recurso.exists() || !recurso.isReadable()) {
-            throw new RuntimeException("Error: no se puede cargar la imagen: " + pathFoto.toString());
+        File file = new File(UPLOADS_FOLDER + fileName);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(decodedBytes);
+        }catch (IOException e){
+            log.error(e.getMessage());
+            return e.getMessage();
         }
-        return recurso;
-    }
-
-    @Override
-    public String copy(MultipartFile file) throws IOException {
-        String uniqueFilename = file.getOriginalFilename();
-        Path rootPath = getPath(uniqueFilename);
-
         log.info(FILE_SAVE);
-
-        Files.copy(file.getInputStream(), rootPath);
-
-        return uniqueFilename;
+        return file.getAbsolutePath();
     }
 
-    @Override
-    public boolean delete(String filename) {
-        Path rootPath = getPath(filename);
-        File archivo = rootPath.toFile();
-
-        if (archivo.exists() && archivo.canRead()) {
-            if (archivo.delete()) {
+    public boolean deleteFile(String fileName){
+        try {
+            File file = new File(UPLOADS_FOLDER + fileName);
+            if (file.exists()) {
+                file.delete();
                 return true;
+            } else {
+                return false;
             }
+        }catch (Exception e){
+            return false;
         }
-        return false;
-    }
-
-    public Path getPath(String filename) {
-        return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
-    }
-
-    @Override
-    public void deleteAll() {
-        FileSystemUtils.deleteRecursively(Paths.get(UPLOADS_FOLDER).toFile());
-
     }
 }

@@ -23,12 +23,13 @@ public class ProductController {
     private static final String PRODUCT_NOT_EXIST = "El producto no existe";
     @Autowired
     private IProductService service;
+
     @GetMapping
-    public ResponseEntity<List<ProductDto>> listProducts(){
+    public ResponseEntity<List<VehicleDto>> listProducts(){
         try{
-            List<ProductDto> listProductDto = new ArrayList<>();
+            List<VehicleDto> listProductDto = new ArrayList<>();
             for (Product p : service.findAll()){
-                listProductDto.add(new ProductDto(p));
+                listProductDto.add(new VehicleDto(p));
             }
             if(!listProductDto.isEmpty()){
                 return ResponseEntity.ok(listProductDto);
@@ -72,7 +73,7 @@ public class ProductController {
                 product.setName(productDto.getName());
                 product.setDescription(productDto.getDescription());
                 product.setPrice(productDto.getPrice());
-                product.setImage(productDto.getImage());
+                product.setImages(productDto.getImages());
                 product.setCategory(productDto.getCategory());
                 product.setBrand(productDto.getBrand());
                 service.save(product);

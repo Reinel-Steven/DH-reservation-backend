@@ -18,8 +18,9 @@ public class VehicleDto implements Serializable {
     @Serial
     private static final long serialVersionUID = -3561990368545425106L;
 
+    private Long id;
     private String name;
-    private List<String> image;
+    private List<String> images;
     private String category;
     private String brand;
     private BigDecimal price;
@@ -28,8 +29,9 @@ public class VehicleDto implements Serializable {
     public VehicleDto() { super(); }
 
     public VehicleDto(Product v) {
+        this.id = v.getId();
         this.name = v.getName();
-        this.image = v.getImage();
+        this.images = v.getImages();
         this.category = v.getCategory();
         this.brand = v.getBrand();
         this.price = v.getPrice();

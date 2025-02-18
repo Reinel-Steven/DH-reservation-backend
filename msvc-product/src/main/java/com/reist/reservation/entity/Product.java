@@ -1,6 +1,7 @@
 package com.reist.reservation.entity;
 
 import com.reist.reservation.dto.VehicleDto;
+import com.reist.reservation.utils.StringConverter;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class Product implements Serializable {
     private Long id;
 
     private String name;
-    private List<String> image;
+    private String listImages;
     private BigDecimal price;
     private String description;
     private String category;
@@ -35,10 +36,18 @@ public class Product implements Serializable {
 
     public Product(VehicleDto p) {
         this.name = p.getName();
-        this.image = p.getImage();
-        this.price = this.getPrice();
-        this.description = getDescription();
+        this.listImages = StringConverter.convertListToString(p.getImages());
+        this.price = p.getPrice();
+        this.description = p.getDescription();
         this.category = p.getCategory();
         this.brand = p.getBrand();
+    }
+
+    public List<String> getImages() {
+        return StringConverter.convertStringToList(this.listImages);
+    }
+
+    public void setImages(List<String> list) {
+        this.listImages = StringConverter.convertListToString(list);
     }
 }

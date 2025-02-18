@@ -21,7 +21,7 @@ public class ProductDto implements Serializable {
 
     public ProductDto(Product p) {
         this.name = p.getName();
-        this.image = p.getImage();
+        this.image = p.getImages();
         this.price = p.getPrice();
         this.description = getDescription();
     }
