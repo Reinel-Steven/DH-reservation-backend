@@ -25,6 +25,7 @@ public class StorageLocalController {
         try {
             if(file.getFileName() != null && file.getFile() != null) {
                 service.saveFile(file.getFile(), file.getFileName());
+                log.info("File saved: " + file.getFileName());
                 return ResponseEntity.ok(file.getFileName());
             }else if(file.getFileName().isEmpty()){
                 throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "El el nombre es nesesario");
@@ -35,6 +36,14 @@ public class StorageLocalController {
             log.error(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al guardar imagen", e);
         }
+    }
+
+    @GetMapping("/exist/{filename}")
+    public ResponseEntity<String> existFile(@PathVariable String filename) {
+        if(filename.isEmpty() || service.existsNameFile(filename)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(filename);
     }
 
     @DeleteMapping("/delete-file/{nameFile}")

@@ -1,7 +1,6 @@
 package org.reist.msvc.user.services.impl;
 
 import org.reist.msvc.user.entity.User;
-import org.reist.msvc.user.entity.Username;
 import org.reist.msvc.user.repositories.IUserRepository;
 import org.reist.msvc.user.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

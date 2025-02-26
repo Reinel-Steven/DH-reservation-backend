@@ -1,7 +1,6 @@
 package org.reist.msvc.user.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

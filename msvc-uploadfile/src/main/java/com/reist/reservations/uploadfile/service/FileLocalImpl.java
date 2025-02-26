@@ -42,13 +42,18 @@ public class FileLocalImpl implements IFileLocalService{
         try {
             File file = new File(UPLOADS_FOLDER + fileName);
             if (file.exists()) {
-                file.delete();
-                return true;
+                return file.delete();
             } else {
                 return false;
             }
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public boolean existsNameFile(String fileName) {
+        String filename = UPLOADS_FOLDER + fileName;
+        return new File(filename).exists();
     }
 }

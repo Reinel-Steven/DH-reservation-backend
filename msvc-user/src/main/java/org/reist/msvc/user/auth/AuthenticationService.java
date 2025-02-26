@@ -1,12 +1,10 @@
 package org.reist.msvc.user.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.reist.msvc.user.dto.UsernameDto;
 import org.reist.msvc.user.entity.User;
 import org.reist.msvc.user.entity.Username;
 import org.reist.msvc.user.repositories.IUserRepository;
 import org.reist.msvc.user.repositories.IUsernameRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

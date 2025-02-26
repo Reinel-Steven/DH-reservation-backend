@@ -1,7 +1,6 @@
 package org.reist.msvc.user.services;
 
 import org.reist.msvc.user.entity.User;
-import org.reist.msvc.user.entity.Username;
 
 import java.util.List;
 import java.util.Optional;

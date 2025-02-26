@@ -1,18 +1,13 @@
 package org.reist.msvc.user.dto;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.reist.msvc.user.entity.Role;
 import org.reist.msvc.user.entity.SessionLog;
-import org.reist.msvc.user.entity.Username;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 public class UsernameDto implements Serializable {

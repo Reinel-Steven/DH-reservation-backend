@@ -32,6 +32,9 @@ public class FileAzureImpl implements IFileAzureService {
     private static final String FILE_SAVE = "Archivo Guardado en el blob de Azure";
     private static final String STORAGE_CONNECTION = getAzureStorageKey();
     private static final String NAME_CONTAINER = "images-vehicles";
+    private static final String FILE_EXIST = "archivo encontrado";
+    private static final String FILE_NOT_EXIST = "archivo NO encontrado";
+
 
     private static CloudBlobContainer getCloudBlobContainer() throws URISyntaxException, InvalidKeyException, StorageException {
         CloudStorageAccount account = CloudStorageAccount.parse(STORAGE_CONNECTION);
@@ -76,12 +79,12 @@ public class FileAzureImpl implements IFileAzureService {
             CloudBlobContainer container = getCloudBlobContainer();
             CloudBlockBlob blockBlob = container.getBlockBlobReference(nameFile);
             StorageUri uri = blockBlob.getStorageUri();
-            log.info("archivo encontrado");
+            log.info(FILE_EXIST);
             return uri.getPrimaryUri().getPath();
 
         } catch (Exception e) {
             log.error(e.getMessage());
-            return "Archivo no exixte";
+            return FILE_NOT_EXIST;
         }
     }
 
@@ -92,10 +95,10 @@ public class FileAzureImpl implements IFileAzureService {
             CloudBlockBlob blockBlob = container.getBlockBlobReference(nameFile);
             StorageUri uri = blockBlob.getStorageUri();
             if(!uri.getPrimaryUri().getPath().isEmpty()){
-                log.info("archivo encontrado");
+                log.info(FILE_EXIST);
                 return true;
             }else {
-                log.info("archivo no encontrado");
+                log.info(FILE_NOT_EXIST);
                 return true;
             }
         } catch (Exception e) {

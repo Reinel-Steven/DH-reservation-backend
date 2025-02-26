@@ -9,4 +9,5 @@ public interface IFileLocalService {
 
     boolean deleteFile(String filename);
 
+    boolean existsNameFile(String fileName);
 }
